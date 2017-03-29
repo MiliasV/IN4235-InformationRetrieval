@@ -16,10 +16,12 @@ fc = {
             "type": "Point",
             "coordinates": [airbnb_listing["listing_lng"], airbnb_listing["listing_lat"]],
             },
+        "properties":{
         "price_per_person": airbnb_listing['price']/float(airbnb_listing['person_capacity']),
         "total_price": airbnb_listing['price'],
         "room_type": airbnb_listing['room_type'],
         "capacity": airbnb_listing['person_capacity']
+        }
      } for airbnb_listing in airbnb_listings]
 }
 
@@ -32,6 +34,6 @@ ams = gpd.read_file('airbnb/Amsterdam.GeoJson')
 ams_boundary = ams.ix[0].geometry
 
 ams_airbnb = df[df.geometry.within(ams_boundary)]
-with open('airbnb.geojson.filter', 'w') as f:
+with open('airbnb_filter.geojson', 'w') as f:
     f.write(ams_airbnb.to_json())
 
